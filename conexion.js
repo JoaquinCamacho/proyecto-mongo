@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log('Conexión exitosa con MongoDB');
-    })
-    .catch((error) => {
-        console.error('Error de conexión:', error.message);
-    }); 
+export default async function conectarDB(){
+    
+    await mongoose.connect(process.env.MONGODB_URI)
+    
+    console.log('Conexión exitosa con MongoDB');
+        
+}
 
+
+conectarDB()

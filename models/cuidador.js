@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const cuidadoreSchema = new mongoose.Schema({
+const cuidadorSchema = new mongoose.Schema({
     nombre:{
         type: String,
         required: true,
@@ -25,7 +25,7 @@ const cuidadoreSchema = new mongoose.Schema({
     },
     disponible:{
         type:Boolean,
-        default:true,
+        default:true
         
     },
     edad:{
@@ -44,12 +44,19 @@ const cuidadoreSchema = new mongoose.Schema({
 {
         
         timestamps:true,
+        toJSON:{
+            transform(doc,ret){
+                ret.id = ret._id
+                delete ret._id
+                delete ret.__v
+                return ret
+            }
+        }
 },
 
 )
 
 
-
-const Cuidador = mongoose.model('Cuidador', cuidadoreSchema)
+const Cuidador = mongoose.model('Cuidador', cuidadorSchema)
 
 export default Cuidador;
