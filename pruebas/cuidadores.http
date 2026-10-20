@@ -1,0 +1,12 @@
+POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan.prueba@example.com",
+  "zona": "Quilmes",
+  "especialidad": "mandados",
+  "disponible": true,
+  "edad": 25,
+  "tarifaPorHora": 5000
+}

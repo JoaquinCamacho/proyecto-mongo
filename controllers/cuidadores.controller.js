@@ -1,4 +1,4 @@
-import { listarCuidadores,cuidadorPorId } from "../services/cuidadores.services.js";
+import { listarCuidadores,cuidadorPorId,crearCuidador } from "../services/cuidadores.services.js";
 
 async function obtenerCuidadores(req,res,next){
 
@@ -39,4 +39,22 @@ async function obtenerCuidadoresPorId(req,res,next){
     }
 }
 
-export {obtenerCuidadores,obtenerCuidadoresPorId}
+async function registrarCuidador(req,res,next){
+
+    try{
+        const datos=req.body
+        
+        const cuidadorCreado = await crearCuidador(datos)
+
+        res.location(`/api/cuidadores/${cuidadorCreado.id}`)
+
+        res.status(201).json({
+            cuidadorCreado
+        })
+    }catch(error){
+        next(error)
+    }
+
+}
+
+export {obtenerCuidadores,obtenerCuidadoresPorId,registrarCuidador}

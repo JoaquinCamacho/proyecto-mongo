@@ -13,9 +13,11 @@ async function cuidadorPorId(id){
     return cuidador
 }
 
-async function crearCuidador(){
+async function crearCuidador(datos){
 
-    
+    const cuidador = await Cuidador.create(datos)
+    return cuidador
+
 }
 
-export {listarCuidadores,cuidadorPorId}
+export {listarCuidadores,cuidadorPorId,crearCuidador}

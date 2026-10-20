@@ -60,7 +60,7 @@ async function iniciarServidor() {
 
         })
     } catch (error) {
-        console.error('No se pudo iniciar el servidor:', error.message)
+        console.error(error)
     }
 }
 
