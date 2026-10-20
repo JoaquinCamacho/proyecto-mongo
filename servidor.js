@@ -1,6 +1,9 @@
 import conectarDB from "./conexion.js"
 import express from "express"
 
+import cuidadoresRouter from "./routes/cuidadores.router.js"
+
+
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -13,12 +16,17 @@ app.use((req, res, next) => {
         const duracion = Date.now() - inicio
 
         console.log(
-            '${req.method} ${req.originalUrl} ${res.statusCode} - ${duracion} ms'
+
+            `${req.method} ${req.originalUrl} ${res.statusCode} - ${duracion} ms`
+
         )
     })
 
     next()
 })
+
+
+app.use("/api/cuidadores", cuidadoresRouter)
 
 app.get('/api/salud',(req,res)=>{
     res.status(200).json({
@@ -47,7 +55,9 @@ async function iniciarServidor() {
         await conectarDB()
 
         app.listen(PORT, () => {
-            console.log('Servidor escuchando en el puerto ${PORT}')
+
+            console.log(`Servidor escuchando en el puerto ${PORT}`)
+
         })
     } catch (error) {
         console.error('No se pudo iniciar el servidor:', error.message)
