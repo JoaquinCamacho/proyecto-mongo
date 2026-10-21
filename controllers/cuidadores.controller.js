@@ -3,7 +3,7 @@ import { listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,elimina
 async function obtenerCuidadores(req,res,next){
 
         try{
-            const cuidadores = await listarCuidadores()
+            const cuidadores = await listarCuidadores(req.query)
 
 
             res.status(200).json({

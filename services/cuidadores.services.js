@@ -1,9 +1,21 @@
 import Cuidador from "../models/cuidador.js";
 
 
-async function listarCuidadores(){
+async function listarCuidadores(filtros){
 
-    const cuidadores = await Cuidador.find()
+    const consulta ={}
+
+    if(filtros.zona){
+        consulta.zona = filtros.zona
+    }
+    if(filtros.especialidad){
+        consulta.especialidad = filtros.especialidad
+    }
+    if(filtros.disponible !== undefined){
+        consulta.disponible = filtros.disponible === "true"
+    }
+
+    const cuidadores = await Cuidador.find(consulta)
     return cuidadores
 
 }
@@ -29,5 +41,7 @@ async function eliminarCuidador(id){
     const cuidador = await Cuidador.findByIdAndDelete(id)
     return cuidador
 }
+
+
 
 export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,eliminarCuidador}
