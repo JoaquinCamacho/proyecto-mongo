@@ -1,4 +1,4 @@
-PATCH http://localhost:3000/api/cuidadores/6ad7ed28017950fba97e14f9
+DELETE http://localhost:3000/api/cuidadores/6ad7ed28017950fba97e14f9
 Content-Type: application/json
 
 {

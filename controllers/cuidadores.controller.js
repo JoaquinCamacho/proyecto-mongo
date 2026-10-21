@@ -1,4 +1,4 @@
-import { listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador } from "../services/cuidadores.services.js";
+import { listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,eliminarCuidador } from "../services/cuidadores.services.js";
 
 async function obtenerCuidadores(req,res,next){
 
@@ -80,4 +80,22 @@ async function actualizarCuidadorController(req,res,next){
     }
 }
 
-export {obtenerCuidadores,obtenerCuidadoresPorId,registrarCuidador,actualizarCuidadorController}
+async function eliminarCuidadorController(req,res,next){
+    try{
+        const id = req.params.id
+        const cuidadorEliminado = await eliminarCuidador(id)
+
+        if(!cuidadorEliminado){
+            return res.status(404).json({
+                error:'No se encontro el cuidador'
+            })
+        }
+
+        res.status(204).end()
+
+    }catch(error){
+        next(error)
+    }
+}
+
+export {obtenerCuidadores,obtenerCuidadoresPorId,registrarCuidador,actualizarCuidadorController,eliminarCuidadorController}

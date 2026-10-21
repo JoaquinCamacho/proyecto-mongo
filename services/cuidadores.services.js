@@ -25,6 +25,9 @@ async function actualizarCuidador(id,datos){
     return cuidador
 }
 
+async function eliminarCuidador(id){
+    const cuidador = await Cuidador.findByIdAndDelete(id)
+    return cuidador
+}
 
-
-export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador}
+export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,eliminarCuidador}
