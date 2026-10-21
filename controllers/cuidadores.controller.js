@@ -1,4 +1,4 @@
-import { listarCuidadores,cuidadorPorId,crearCuidador } from "../services/cuidadores.services.js";
+import { listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador } from "../services/cuidadores.services.js";
 
 async function obtenerCuidadores(req,res,next){
 
@@ -57,4 +57,27 @@ async function registrarCuidador(req,res,next){
 
 }
 
-export {obtenerCuidadores,obtenerCuidadoresPorId,registrarCuidador}
+async function actualizarCuidadorController(req,res,next){
+
+    try{
+        const id = req.params.id
+        const datos = req.body
+
+        const actualizar = await actualizarCuidador(id,datos)
+
+        if(!actualizar){
+            return res.status(404).json({
+                error:'No existe'
+            })
+        }
+
+        res.status(200).json({
+            actualizar
+        })
+
+    }catch(error){
+        next(error)
+    }
+}
+
+export {obtenerCuidadores,obtenerCuidadoresPorId,registrarCuidador,actualizarCuidadorController}

@@ -20,4 +20,11 @@ async function crearCuidador(datos){
 
 }
 
-export {listarCuidadores,cuidadorPorId,crearCuidador}
+async function actualizarCuidador(id,datos){
+    const cuidador = await Cuidador.findByIdAndUpdate(id,datos, {new:true,runValidators:true})
+    return cuidador
+}
+
+
+
+export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador}
