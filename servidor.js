@@ -1,5 +1,6 @@
 import conectarDB from "./conexion.js"
 import express from "express"
+import authMiddleware from "./middlewares/auth.middleware.js"
 
 import cuidadoresRouter from "./routes/cuidadores.router.js"
 

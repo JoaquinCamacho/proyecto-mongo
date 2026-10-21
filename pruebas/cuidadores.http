@@ -1,1 +1,1 @@
-GET http://localhost:3000/api/cuidadores?zona=Quilmes
+POST http://localhost:3000/api/cuidadores
