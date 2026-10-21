@@ -43,11 +43,28 @@ app.use((req,res)=>{
 
 app.use((error,req,res,next)=>{
 
-    console.error()
+    console.error(error)
+
+    if(error.name === 'ValidationError'){
+        return  res.status(422).json({
+            error:'error de validacion'
+        })
+    }
+    if(error.name === 'CastError'){
+        return res.status(400).json({
+            error:'id no valido'
+        })
+    }
+    if(error.code === 11000){
+        return res.status(409).json({
+            error:'email existente'
+        })
+    }
 
     res.status(error.status || 500).json({
         error:error.message || 'Error del servidor'
     })
+
 })
 
 async function iniciarServidor() {
