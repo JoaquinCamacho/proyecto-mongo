@@ -1,1 +1,124 @@
+
+###Comprobar que la API funciona
+GET http://localhost:3000/api/salud
+
+
+### Listar todos los cuidadores
+GET http://localhost:3000/api/cuidadores
+
+### Filtrar cuidadores por zona
+GET http://localhost:3000/api/cuidadores?zona=Quilmes
+
+### Filtrar cuidadores por especialidad
+GET http://localhost:3000/api/cuidadores?especialidad=cuidados
+
+### Filtrar cuidadores por disponibilidad
+GET http://localhost:3000/api/cuidadores?disponible=true
+
+### Filtrar cuidadores combinados especialidad y zona 
+GET http://localhost:3000/api/cuidadores?especialidad=cuidados&zona=Quilmes
+
+### Buscar por ID
+GET http://localhost:3000/api/cuidadores/6ad9435c4a249da531fad3e2
+
+### Error de buscar por ID
+GET http://localhost:3000/api/cuidadores/aaaaaaaaaaaaaaaaaaaaaaaa
+
+### Registrar un cuidador
 POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+Authorization: Puede pasar
+
+{
+  "nombre": "Joaquin Luna",
+  "email": "joaquin.prueba@example.com",
+  "zona": "Adrogue",
+  "especialidad": "mandados",
+  "disponible": true,
+  "edad": 35,
+  "tarifaPorHora": 6000
+}
+
+### Intento de registrar un cuidador invalido
+
+POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+Authorization: Puede pasar
+
+{
+    "nombre":"Ezequiel Luna",
+    "email": "eze.prueba@example.com",
+    "zona":"San martin",
+    "especialidad":"futbol",
+    "disponible":"true",
+    "edad":"21",
+    "tarifaPorHora":7000
+}
+
+### Registrar cuidador con email duplicado
+POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+Authorization: Bearer prueba123
+
+{
+  "nombre": "Ana Nueva",
+  "email": "ana.prueba@example.com",
+  "zona": "Quilmes",
+  "especialidad": "mandados",
+  "disponible": true,
+  "edad": 30,
+  "tarifaPorHora": 5000
+}
+
+### Actualizar 
+
+PATCH http://localhost:3000/api/cuidadores/6ad9435c4a249da531fad3e2
+Content-Type: application/json
+
+{
+    "zona": "Claypole"
+}
+
+### Crear cuidador de prueba
+POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+Authorization: Bearer prueba123
+
+{
+  "nombre": "Juan Perez",
+  "email": "juan.prueba@example.com",
+  "zona": "Quilmes",
+  "especialidad": "mandados",
+  "disponible": true,
+  "edad": 35,
+  "tarifaPorHora": 6000
+}
+
+### Eliminar cuidador de prueba
+DELETE http://localhost:3000/api/cuidadores/6ad94ad827a235d1ef850dc8
+
+### Registrarse sin autorizacion
+
+POST http://localhost:3000/api/cuidadores
+Content-Type: application/json
+
+{
+  "nombre": "Mario Diaz",
+  "email": "mario.prueba@example.com",
+  "zona": "Quilmes",
+  "especialidad": "mandados",
+  "disponible": true,
+  "edad": 40,
+  "tarifaPorHora": 5500
+}
+
+### Actualizar cuidador inexistente
+PATCH http://localhost:3000/api/cuidadores/aaaaaaaaaaaaaaaaaaaaaaaa
+Content-Type: application/json
+
+{
+  "zona": "Quilmes"
+}
+
+### Eliminar cuidador inexistente
+DELETE http://localhost:3000/api/cuidadores/aaaaaaaaaaaaaaaaaaaaaaaa

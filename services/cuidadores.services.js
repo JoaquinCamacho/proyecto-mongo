@@ -42,6 +42,26 @@ async function eliminarCuidador(id){
     return cuidador
 }
 
+async function ocuparCuidador(id){
+
+    const cuidador = await Cuidador.findById(id)
+
+    if(!cuidador){
+        return null
+    }
+
+    if(cuidador.disponible === false){
+        const error = new Error ('El cuidador esta ocupado')
+        error.status = 409
+        throw error
+    }
+
+    cuidador.disponible = false
+    await cuidador.save()
+
+    return cuidador
+}
 
 
-export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,eliminarCuidador}
+
+export {listarCuidadores,cuidadorPorId,crearCuidador,actualizarCuidador,eliminarCuidador,ocuparCuidador}
