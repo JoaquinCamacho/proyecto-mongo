@@ -1,5 +1,5 @@
 import Cuidador from "../models/cuidador.js";
-
+import Usuario from "../models/usuario.js";
 
 async function listarCuidadores(filtros){
 
@@ -16,6 +16,8 @@ async function listarCuidadores(filtros){
     }
 
     const cuidadores = await Cuidador.find(consulta)
+    .populate('usuario', 'nombre email')
+
     return cuidadores
 
 }

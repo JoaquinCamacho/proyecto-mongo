@@ -1,5 +1,21 @@
 import conectarDB from '../conexion.js'
 import Cuidador from '../models/cuidador.js'
+import Usuario from '../models/usuario.js'
+import {randomBytes, scrypt} from 'node:crypto'
+import { promisify } from 'node:util'
+
+const scryptAsync = promisify(scrypt)
+
+async function generarCredenciales(password) {
+    const salt = randomBytes(16).toString('hex')
+    const hash = await scryptAsync(password, salt, 64)
+
+    return {
+        salt,
+        passwordHash: hash.toString('hex')
+    }
+}
+
 
 const cuidadores = [
     {
@@ -51,7 +67,41 @@ const cuidadores = [
 
 async function cargarSeed() {
     await conectarDB()
-    await Cuidador.insertMany(cuidadores)
+
+
+    let admin = await Usuario.findOne({ email: 'admin@example.com' })
+
+if (!admin) {
+    const credenciales = await generarCredenciales('Admin123')
+
+    admin = await Usuario.create({
+        nombre: 'Administrador',
+        email: 'admin@example.com',
+        ...credenciales,
+        rol: 'admin'
+    })
+}
+
+let usuario = await Usuario.findOne({ email: 'usuario@example.com' })
+
+if (!usuario) {
+    const credenciales = await generarCredenciales('Usuario123')
+
+    usuario = await Usuario.create({
+        nombre: 'Usuario comun',
+        email: 'usuario@example.com',
+        ...credenciales,
+        rol: 'usuario'
+    })
+}
+    
+    for (const cuidador of cuidadores) {
+    await Cuidador.findOneAndUpdate(
+        { email: cuidador.email },
+        { ...cuidador, usuario: usuario._id },
+        { new: true, upsert: true, runValidators: true }
+    )
+}
     console.log('Seed cargado correctamente')
     process.exit(0)
 }

@@ -39,6 +39,11 @@ const cuidadorSchema = new mongoose.Schema({
         required:true,
         min:1
     },
+    usuario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario'
+    }
+
     
 },
 {
