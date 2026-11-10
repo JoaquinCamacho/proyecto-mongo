@@ -3,12 +3,14 @@ import express from "express"
 import authMiddleware from "./middlewares/auth.middleware.js"
 
 import cuidadoresRouter from "./routes/cuidadores.router.js"
-
+import authRouter from "./routes/auth.router.js"
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+app.use("/api/auth", authRouter)
+app.use("/api/cuidadores", cuidadoresRouter)
 
 app.use((req, res, next) => {
     const inicio = Date.now()
@@ -27,7 +29,6 @@ app.use((req, res, next) => {
 })
 
 
-app.use("/api/cuidadores", cuidadoresRouter)
 
 app.get('/api/salud',(req,res)=>{
     res.status(200).json({

@@ -122,3 +122,6 @@ Content-Type: application/json
 
 ### Eliminar cuidador inexistente
 DELETE http://localhost:3000/api/cuidadores/aaaaaaaaaaaaaaaaaaaaaaaa
+
+###
+POST http://localhost:3000/api/auth/login

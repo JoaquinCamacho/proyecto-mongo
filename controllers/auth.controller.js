@@ -7,6 +7,7 @@ const asyncScrypt = promisify(scrypt)
 
 async function login(req, res) {
 
+
     const {email, password} = req.body
 
     const usuario = await Usuario.findOne({email})
