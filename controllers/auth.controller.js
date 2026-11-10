@@ -1,9 +1,49 @@
 import Usuario from "../models/usuario.js";
-import {scrypt} from "node:crypto";
+import {scrypt,randomBytes} from "node:crypto";
 import { promisify } from "node:util";
 import jwt from 'jsonwebtoken'
 
 const asyncScrypt = promisify(scrypt)
+
+async function generarCredenciales(password) {
+    const salt = randomBytes(16).toString('hex')
+
+    const hash = await asyncScrypt(password, salt, 64)
+
+    return {
+        salt,
+        passwordHash: hash.toString('hex')
+    }
+}
+
+async function registrar(req, res) {
+
+    const {nombre, email, password} = req.body
+
+    const usuarioExistente = await Usuario.findOne({email})
+
+    if (usuarioExistente) {
+        return res.status(409).json({
+        error: 'El email ya está registrado'
+    })
+}
+
+    const credenciales = await generarCredenciales(password)
+
+    const nuevoUsuario = await Usuario.create({
+    nombre,
+    email,
+    ...credenciales,
+    rol: 'usuario'
+})
+
+    return res.status(201).json({
+        mensaje: 'Usuario registrado correctamente',
+        usuario: nuevoUsuario
+    })
+
+}
+
 
 async function login(req, res) {
 
@@ -41,4 +81,4 @@ async function login(req, res) {
 
 }
 
-export { login }
+export { login,registrar }
