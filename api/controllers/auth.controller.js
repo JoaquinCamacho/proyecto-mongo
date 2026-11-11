@@ -57,10 +57,11 @@ async function login(req, res) {
         })
     }
 
+    
     const hash = await asyncScrypt(password, usuario.salt, 64)
 
     const hashGuardado = Buffer.from(usuario.passwordHash, 'hex')
-
+    
     if(!hashGuardado.equals(hash)){
         return res.status(401).json({
             error:'Credenciales incorrectas'
@@ -77,7 +78,22 @@ async function login(req, res) {
         mensaje: 'Login exitoso',
         token
     })
-
+    
 }
 
-export { login,registrar }
+async function obtenerPerfil(req, res) {
+
+    const usuario = await Usuario.findById(req.usuario.id)
+        .select('nombre email rol')
+
+    if (!usuario) {
+        return res.status(404).json({
+            error: 'Usuario no encontrado'
+        })
+    }
+
+    return res.json({
+        usuario
+    })
+}
+export { login,registrar,obtenerPerfil }

@@ -1,78 +1,64 @@
-API CERCA
+# CERCA
 
-API REST para gestionar cuidadores, desarrollada con Node.js, Express y MongoDB mediante Mongoose
+Aplicación web para consultar y filtrar cuidadores por zona y especialidad.
 
--------------------------------------------------
+## Tecnologías
+- Backend: Node.js, Express, MongoDB y Mongoose.
+- Frontend: React, Vite y Tailwind CSS.
+- Autenticación: JWT.
+- Seguridad: salt y scrypt.
 
-INSTALACION
+## Instalación y ejecución
+
+Backend
+
+cd api
 npm install
-Crear un archivo .env tomando de ejemplo el archivo .env.ejemplo y configurar el PORT y la URI
 
-----------------------------------------------
+Crear .env a partir de .env.ejemplo y completar las variables de conexión a MongoDB, JWT y CORS.
 
-Ejecucion
+Ejecutar la semilla:
 
-npm start
+node --env-file=.env scripts/seed.js
 
-para desarrollo:
+Iniciar la API:
 
 npm run dev
 
----------------------------------------------
-RUTAS
+Frontend: abrir otra terminal y ejecutar:
 
-GET
-/api/salud
-Estado de la API
+cd web
+npm install
+npm run dev
 
-GET
-/api/cuidadores
-Listar y filtrar cuidadores
+## Usuarios de prueba
 
-GET
-/api/cuidadores/:id
-Buscar por ID
+- Admin: admin@example.com — Admin123
+- Usuario común: usuario@example.com — Usuario123
 
-POST
-/api/cuidadores
-Registrar cuidador
+## Rutas principales
 
-PATCH
-/api/cuidadores/:id
-Actualizar cuidador
+Autenticación:
+- POST `/api/auth/registro`
+- POST `/api/auth/login`
+- GET `/api/auth/perfil` (requiere token)
 
-DELETE
-/api/cuidadores/:id
-Eliminar cuidador
+**Cuidadores:**
+- GET `/api/cuidadores`
+- GET `/api/cuidadores/:id`
+- POST `/api/cuidadores`
+- PATCH `/api/cuidadores/:id`
+- PATCH `/api/cuidadores/:id/ocupar`
+- DELETE `/api/cuidadores/:id` (solo admin)
 
-PATCH
-/api/cuidadores/:id/ocupar
-Ocupar cuidador
+## Pruebas
 
-El registro tiene que tener una autorizacion para poder ingresar 
+Se utiliza Thunder Client para probar registro, login, rutas protegidas, respuesta 401 sin token y respuesta 403 al intentar acceder como usuario común a una ruta de administrador.
 
-----------------------------------------------------------------
+## Seguridad
 
-Errores
+Las contraseñas se almacenan con salt y scrypt. No se devuelven en las respuestas. Las credenciales de MongoDB y el secreto JWT se guardan en `.env`, que no debe subirse al repositorio.
 
-La API tiene respuestas 400, 401, 404, 409, 422 y 500 y cuando se elimina responde 204
+## Integrantes
 
-----------------------------------------------------------------
-
-Pruebas
-
-Las pruebas estan hechas en la carpeta pruebas/cuidadores.http y usamos la extension Rest Client de VSCODE
-
---------------------------------------------------
-
-Decisiones
-
-1.Separamos en rutas,controladores,servicios y modelo
-2.Validaciones de datos y manejo centralizado de errores
-3.Busqueda de filtros opcionales
-
-------------------------------------------------------------
-
-Uso de IA
-
-Se uso la IA para comprender algunos conceptos no claros en la consigna y resolver errores
+Joaquin Camacho y Ezequiel Luna
